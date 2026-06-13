@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #ec4899;
+  --color-secondary: #fdf2f8;
+  --color-background: #fafaf9; /* cream */
+  --color-surface: #ffffff;
+  --color-text-main: #1c1917;
+  --color-text-muted: #57534e;
+}
+
+body {
+  @apply bg-[#fafaf9] text-[#1c1917] m-0 p-0 font-sans;
+}
+
+.glass-panel {
+  @apply bg-white/90 backdrop-blur-md border border-stone-200 shadow-lg rounded-2xl;
+}
