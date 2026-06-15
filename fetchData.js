@@ -1,20 +1,37 @@
 import fs from 'fs';
 
-const preTestCsv = `Marca temporal,¿En qué rango de edad se encuentra? , ¿Con qué género se identifica?  ,"¿Ha utilizado alguna vez una plataforma de comercio electrónico como: Amazon, Shein o Temu o una página web para comprar algún producto o servicio?  ",¿Con qué frecuencia compra productos en línea durante el año? ,   ¿Qué canales o medios ha utilizado previamente para pedir productos a domicilio?  ,¿Cómo suele descubrir nuevas tiendas en línea cuando necesita comprar un regalo especial?  ,  ¿Desde qué dispositivo realiza la mayoría de sus consultas y compras en línea?  ,¿Con qué frecuencia realiza compras (de cualquier tipo de producto) por internet?  ,"Al ingresar a una tienda en línea, ¿cómo prefiere que esté organizada la búsqueda para encontrar rápido lo que quiere?  ", ¿Cuál es la principal razón por la que usted decide ABANDONAR una compra en una página web?  ,"Cuando intentas comprar o buscar productos en tiendas online desde tu celular, ¿qué es lo que más te molesta o te frustra?  ", ¿Cómo prefieres recibir las actualizaciones sobre el estado de la entrega de tu pedido? (Puedes seleccionar más de una)  ,"Cuando compra productos en línea que no puede ver físicamente, ¿Qué elemento visual prefiere para calcular el tamaño real del producto?  ","Antes de ingresar su tarjeta o realizar una transferencia en una tienda en línea, ¿Qué elemento necesita ver obligatoriamente? ","Cuando usted compra en tiendas en línea locales y el único método de pago es mediante ""Transferencia Bancaria"", ¿qué parte del proceso le resulta más incómoda o tediosa?  ","  Al enviar un regalo sorpresa a la casa o trabajo de otra persona, ¿cuál es el mayor reto o preocupación logística que usted suele tener?  ","Si le surge una duda rápida sobre la personalización de un producto y la información no está clara en la página, ¿Cómo actúa usualmente? ",Califique qué tan importante es cada uno de los siguientes aspectos para sentir que la página es fácil de navegar y confiable.  [Alta velocidad de carga de la página],Califique qué tan importante es cada uno de los siguientes aspectos para sentir que la página es fácil de navegar y confiable.  [Claridad y calidad visual de las fotografías del producto],Califique qué tan importante es cada uno de los siguientes aspectos para sentir que la página es fácil de navegar y confiable.  [Proceso de pago sencillo y con pocos pasos],Califique qué tan importante es cada uno de los siguientes aspectos para sentir que la página es fácil de navegar y confiable.  [Chat de soporte técnico o botón de WhatsApp visible y accesible],¿Qué característica de sitios como Amazon o MercadoLibre le gustaría ver en una tienda en línea pequeña o local? ,Recuerde una experiencia de compra en línea que le haya generado frustración. ¿Qué fue lo que le molestó de la página?  `;
-
-const postTestCsv = `Marca temporal,Resultó fácil navegar por la página y encontrar los productos que buscaba,El menú de la parte superior me resultó útil para moverme por el sitio web de manera eficiente.,La página de inicio le ayuda a entender rápidamente lo qué ofrece el sitio web,La información mostrada fue suficiente para decidir su compra ,"La información sobre los productos (precios, descripciones, flores incluidas, carrito) es fácil de leer","Si su respuesta fue negativa o regular, por favor indique qué información faltó o qué resultó confuso. ",Es fácil ubicar las opciones para crear su cuenta y completar su registro en la plataforma,Sentí que tenía el control total sobre mi carrito para modificar cantidades o eliminar productos de manera rápida.,"El diseño visual, los botones y los menús funcionan de la misma manera en todo el sitio web, sin cambios confusos.  ",Seleccionar los productos que quería usando los botones de la página fue sencillo y rápido. ,Considero que el sitio web es fácil de usar sin necesidad de una explicación previa o un manual de uso.,"Luego de usar el sitio web, considero que la plataforma es segura y confiable para realizar una compra.",Las imágenes de los arreglos florales son lo suficientemente detalladas y claras como para tener una idea precisa del producto real.,"El formulario para registrar los datos en la sección pedidos especiales, fue fácil de completar.",Me sentí seguro(a) y confiado(a) al avanzar hacia la pantalla de confirmación y ver los datos para la transferencia bancaria.,El ícono de WhatsApp que aparece en la página es fácil de notar y me parece útil. ,"Durante las tareas que realizó en nuestro sitio, ¿Hubo algún momento en que se sintio frustrado(a) o con ganas de abandonar la página?","¿En qué tarea o sección fue y por qué? (Responda únicamente si su respuesta anterior fue ""Sí"")",Evalúe qué tan de acuerdo está con las siguientes afirmaciones sobre los atributos del sitio web [El diseño visual es atractivo y agradable.],Evalúe qué tan de acuerdo está con las siguientes afirmaciones sobre los atributos del sitio web [La velocidad de carga del sitio es rápida.],Evalúe qué tan de acuerdo está con las siguientes afirmaciones sobre los atributos del sitio web [La navegación y el uso del menú son claros.],Evalúe qué tan de acuerdo está con las siguientes afirmaciones sobre los atributos del sitio web [Es fácil encontrar los productos que busco.],Evalúe qué tan de acuerdo está con las siguientes afirmaciones sobre los atributos del sitio web [El texto de la página se lee con facilidad y sin esfuerzo.],Ordene los siguientes pasos del proceso de compra. (Seleccione un opción diferente para cada paso). [Buscar el arreglo floral],Ordene los siguientes pasos del proceso de compra. (Seleccione un opción diferente para cada paso). [Ver detalles del producto],Ordene los siguientes pasos del proceso de compra. (Seleccione un opción diferente para cada paso). [Agregar al carrito],"Ordene los siguientes pasos del proceso de compra. (Seleccione un opción diferente para cada paso). [Agregar extras (chocolates, globos, peluches)]",Ordene los siguientes pasos del proceso de compra. (Seleccione un opción diferente para cada paso). [Llenar datos de entrega],Ordene los siguientes pasos del proceso de compra. (Seleccione un opción diferente para cada paso). [Confirmar la compra],"¿Tuvo dificultad para encontrar algún botón, sección o información dentro de la página? ¿Cuál? ","Si pudiera cambiar o agregar algo en el diseño de esta página, ¿Qué haría? "`;
-
 async function fetchRealData() {
   const PRE_TEST_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU_i7XyV_vzkJShtNIvf3kQpawnm3U4WXa-KVD3S6MsewOP1dOoWZGxNNLLumG44-T5RI3hno5z_hr/pub?gid=793794636&single=true&output=csv";
   const POST_TEST_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU_i7XyV_vzkJShtNIvf3kQpawnm3U4WXa-KVD3S6MsewOP1dOoWZGxNNLLumG44-T5RI3hno5z_hr/pub?gid=111555160&single=true&output=csv";
+  const TASK1_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU_i7XyV_vzkJShtNIvf3kQpawnm3U4WXa-KVD3S6MsewOP1dOoWZGxNNLLumG44-T5RI3hno5z_hr/pub?gid=1905174318&single=true&output=csv";
+  const TASK2_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU_i7XyV_vzkJShtNIvf3kQpawnm3U4WXa-KVD3S6MsewOP1dOoWZGxNNLLumG44-T5RI3hno5z_hr/pub?gid=1498508982&single=true&output=csv";
+  const TASK3_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU_i7XyV_vzkJShtNIvf3kQpawnm3U4WXa-KVD3S6MsewOP1dOoWZGxNNLLumG44-T5RI3hno5z_hr/pub?gid=117312480&single=true&output=csv";
+  const TASK4_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU_i7XyV_vzkJShtNIvf3kQpawnm3U4WXa-KVD3S6MsewOP1dOoWZGxNNLLumG44-T5RI3hno5z_hr/pub?gid=1253418288&single=true&output=csv";
   
-  const [pre, post] = await Promise.all([fetch(PRE_TEST_URL), fetch(POST_TEST_URL)]);
+  const [pre, post, t1, t2, t3, t4] = await Promise.all([
+    fetch(PRE_TEST_URL), 
+    fetch(POST_TEST_URL),
+    fetch(TASK1_URL),
+    fetch(TASK2_URL),
+    fetch(TASK3_URL),
+    fetch(TASK4_URL)
+  ]);
+
   const preData = await pre.text();
   const postData = await post.text();
+  const t1Data = await t1.text();
+  const t2Data = await t2.text();
+  const t3Data = await t3.text();
+  const t4Data = await t4.text();
 
   fs.writeFileSync('./public/mock_pre_test.csv', preData);
   fs.writeFileSync('./public/mock_post_test.csv', postData);
-  console.log("Mock data CSVs created in public folder.");
+  fs.writeFileSync('./public/mock_task1.csv', t1Data);
+  fs.writeFileSync('./public/mock_task2.csv', t2Data);
+  fs.writeFileSync('./public/mock_task3.csv', t3Data);
+  fs.writeFileSync('./public/mock_task4.csv', t4Data);
+  
+  console.log("Mock data CSVs (Pre, Post, and 4 Tasks) created in public folder.");
 }
 
 fetchRealData();

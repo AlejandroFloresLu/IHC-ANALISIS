@@ -6,6 +6,7 @@ import { SystemAttributesRadar } from './charts/SystemAttributesRadar';
 import { ComponentEvaluationBars } from './charts/ComponentEvaluationBars';
 import { QualitativeFeedbackTable } from './QualitativeFeedbackTable';
 import { KpiCard } from './KpiCard';
+import { TaskAnalytics } from './TaskAnalytics';
 
 export const Dashboard = ({ data }) => {
   if (!data) return null;
@@ -42,6 +43,12 @@ export const Dashboard = ({ data }) => {
           </div>
         </section>
 
+        {/* --- NUEVA SECCIÓN: TAREAS EN VIVO --- */}
+        <section className="space-y-6">
+          <h2 className="text-2xl font-bold text-stone-800 border-b border-stone-200 pb-2">Análisis de Tareas en Vivo (Observación Directa)</h2>
+          <TaskAnalytics tasks={data.tasks} />
+        </section>
+
         {/* --- SECCIÓN 2: EVALUACIÓN HEURÍSTICA Y ATRIBUTOS --- */}
         <section className="space-y-6">
           <h2 className="text-2xl font-bold text-stone-800 border-b border-stone-200 pb-2">Atributos y Heurísticas (Puntos Críticos)</h2>
@@ -70,3 +77,4 @@ export const Dashboard = ({ data }) => {
     </div>
   );
 };
+

@@ -3,6 +3,12 @@ import Papa from 'papaparse';
 const PRE_TEST_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU_i7XyV_vzkJShtNIvf3kQpawnm3U4WXa-KVD3S6MsewOP1dOoWZGxNNLLumG44-T5RI3hno5z_hr/pub?gid=793794636&single=true&output=csv";
 const POST_TEST_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU_i7XyV_vzkJShtNIvf3kQpawnm3U4WXa-KVD3S6MsewOP1dOoWZGxNNLLumG44-T5RI3hno5z_hr/pub?gid=111555160&single=true&output=csv";
 
+// Nuevos links de Tareas
+const TASK1_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU_i7XyV_vzkJShtNIvf3kQpawnm3U4WXa-KVD3S6MsewOP1dOoWZGxNNLLumG44-T5RI3hno5z_hr/pub?gid=1905174318&single=true&output=csv";
+const TASK2_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU_i7XyV_vzkJShtNIvf3kQpawnm3U4WXa-KVD3S6MsewOP1dOoWZGxNNLLumG44-T5RI3hno5z_hr/pub?gid=1498508982&single=true&output=csv";
+const TASK3_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU_i7XyV_vzkJShtNIvf3kQpawnm3U4WXa-KVD3S6MsewOP1dOoWZGxNNLLumG44-T5RI3hno5z_hr/pub?gid=117312480&single=true&output=csv";
+const TASK4_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSU_i7XyV_vzkJShtNIvf3kQpawnm3U4WXa-KVD3S6MsewOP1dOoWZGxNNLLumG44-T5RI3hno5z_hr/pub?gid=1253418288&single=true&output=csv";
+
 // Likert mapping to numeric 1-5
 const likertMap = {
   "Totalmente en desacuerdo": 1,
@@ -19,38 +25,43 @@ function mapLikertToNumber(val) {
 
 export const fetchData = async () => {
   try {
-    const [preTestRes, postTestRes] = await Promise.all([
+    const [preTestRes, postTestRes, t1Res, t2Res, t3Res, t4Res] = await Promise.all([
       fetch(PRE_TEST_URL),
-      fetch(POST_TEST_URL)
+      fetch(POST_TEST_URL),
+      fetch(TASK1_URL),
+      fetch(TASK2_URL),
+      fetch(TASK3_URL),
+      fetch(TASK4_URL)
     ]);
 
     const preTestCsv = await preTestRes.text();
     const postTestCsv = await postTestRes.text();
+    const t1Csv = await t1Res.text();
+    const t2Csv = await t2Res.text();
+    const t3Csv = await t3Res.text();
+    const t4Csv = await t4Res.text();
 
     const preTestJson = Papa.parse(preTestCsv, { header: true, skipEmptyLines: true }).data;
     const postTestJson = Papa.parse(postTestCsv, { header: true, skipEmptyLines: true }).data;
+    const t1Json = Papa.parse(t1Csv, { header: true, skipEmptyLines: true }).data;
+    const t2Json = Papa.parse(t2Csv, { header: true, skipEmptyLines: true }).data;
+    const t3Json = Papa.parse(t3Csv, { header: true, skipEmptyLines: true }).data;
+    const t4Json = Papa.parse(t4Csv, { header: true, skipEmptyLines: true }).data;
 
-    return processMetrics(preTestJson, postTestJson);
+    return processMetrics(preTestJson, postTestJson, [t1Json, t2Json, t3Json, t4Json]);
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;
   }
 };
 
-function processMetrics(preTest, postTest) {
+function processMetrics(preTest, postTest, tasksData) {
   // 1. Demographics and Channels (Pre-test)
   const ageDistribution = countOccurrences(preTest, "¿En qué rango de edad se encuentra? ");
-  const deviceDistribution = countOccurrences(preTest, "¿Desde qué dispositivo realiza la mayoría de sus consultas y compras en línea?  ");
+  const deviceDistribution = countOccurrences(preTest, "¿Desde qué dispositivo realiza la mayoría de sus compras en línea?  ");
   const abandonmentReasons = countOccurrences(preTest, "¿Cuál es la principal razón por la que usted decide ABANDONAR una compra en una página web?  ");
 
   // 2. Usability Index (Post-test)
-  // Mapping boolean-like questions to numbers? Wait, the questions in the prompt mentioned:
-  // "Fácil navegación, consistencia de UI, claridad de información"
-  // Let's use the columns that look like Likert or similar. 
-  // Easy navigation: "Resultó fácil navegar por la página y encontrar los productos que buscaba"
-  // UI consistency: "El diseño visual, los botones y los menús funcionan de la misma manera en todo el sitio web, sin cambios confusos.  "
-  // Information clarity: "La información sobre los productos (precios, descripciones, flores incluidas, carrito) es fácil de leer"
-  
   let easyNavTotal = 0, uiConsistencyTotal = 0, infoClarityTotal = 0;
   let count = postTest.length;
 
@@ -70,15 +81,11 @@ function processMetrics(preTest, postTest) {
   };
 
   // 3. Frustration Rate (Post-test)
-  // KPI card % of users answering "Sí" to "Durante las tareas que realizó en nuestro sitio, ¿Hubo algún momento en que se sintio frustrado(a) o con ganas de abandonar la página?"
   const frustrationCol = "Durante las tareas que realizó en nuestro sitio, ¿Hubo algún momento en que se sintio frustrado(a) o con ganas de abandonar la página?";
   const frustratedUsers = postTest.filter(row => row[frustrationCol]?.trim()?.toLowerCase() === "sí").length;
-  const frustrationRate = (frustratedUsers / count) * 100;
+  const frustrationRate = count > 0 ? (frustratedUsers / count) * 100 : 0;
 
   // 4. Process Difficulty Funnel
-  // "Ordene los siguientes pasos del proceso de compra. (Seleccione un opción diferente para cada paso). [Buscar el arreglo floral]"
-  // Phases: Buscar, Carrito, Datos de entrega, Confirmar
-  // Let's aggregate counts for each phase
   const phases = [
     { key: "Buscar el arreglo floral", label: "Buscar" },
     { key: "Agregar al carrito", label: "Carrito" },
@@ -94,7 +101,6 @@ function processMetrics(preTest, postTest) {
     
     postTest.forEach(row => {
       let val = row[colName]?.trim();
-      // capitalize first letter to match mapping
       if(val) {
         val = val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
         if(counts[val] !== undefined) counts[val]++;
@@ -151,6 +157,45 @@ function processMetrics(preTest, postTest) {
     }
   }).filter(item => (item.difficulty && item.difficulty.length > 2) || (item.frustration && item.frustration.length > 2) || (item.suggestion && item.suggestion.length > 2));
 
+  // 8. Tareas en Vivo (Live Tasks)
+  const tasksProcessed = tasksData.map((taskSheet, index) => {
+    const taskNum = index + 1;
+    // Buscamos la columna de completada: usualmente "Tarea 1 (Completada)" o similar.
+    const completionCol = Object.keys(taskSheet[0] || {}).find(k => k.includes(`Tarea ${taskNum}`));
+    
+    let successCount = 0;
+    let totalAttempts = 0;
+    let qualitativeNotes = [];
+
+    taskSheet.forEach(row => {
+      const idUser = row["ID Usuario"];
+      if(!idUser) return; // skip empty rows
+      
+      totalAttempts++;
+      const isCompleted = row[completionCol]?.trim()?.toLowerCase() === "sí" || row[completionCol]?.trim()?.toLowerCase() === "si";
+      if (isCompleted) successCount++;
+
+      const errors = row["Errores / Clics Compulsivos"]?.trim();
+      const frustration = row["Gestos de Frustración"]?.trim();
+      const notes = row["Notas del Observador"]?.trim();
+
+      if ((errors && errors.length > 1) || (frustration && frustration.length > 1) || (notes && notes.length > 1)) {
+        qualitativeNotes.push({
+          user: idUser,
+          errors: errors || "-",
+          frustration: frustration || "-",
+          notes: notes || "-"
+        });
+      }
+    });
+
+    return {
+      taskNumber: taskNum,
+      successRate: totalAttempts > 0 ? (successCount / totalAttempts) * 100 : 0,
+      qualitativeNotes
+    };
+  });
+
   return {
     demographics: {
       age: ageDistribution,
@@ -162,7 +207,8 @@ function processMetrics(preTest, postTest) {
     funnel: funnelData,
     systemAttributes,
     componentEvaluations,
-    qualitativeFeedback
+    qualitativeFeedback,
+    tasks: tasksProcessed // <-- Exposing tasks metrics
   };
 }
 
@@ -173,7 +219,6 @@ function countOccurrences(data, columnName) {
     if (!val) val = "No especificado";
     counts[val] = (counts[val] || 0) + 1;
   });
-  // Convert to chart format
   return {
     labels: Object.keys(counts),
     data: Object.values(counts)
