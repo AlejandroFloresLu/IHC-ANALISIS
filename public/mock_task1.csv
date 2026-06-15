@@ -1,13 +1,13 @@
-ID Usuario,Tarea 1 (Completada),Errores / Clics Compulsivos,Gestos de Frustración,Notas del Observador
-1,,,,
-2,,,,
-3,,,,
-4,,,,
-5,,,,
-6,,,,
-7,,,,
-8,,,,
-9,,,,
-10,,,,
-11,,,,
-12,,,,
+ID Usuario,Tarea 1 (Completada),Errores / Clics Compulsivos,Gestos de Frustración,Notas del Observador,Tiempo
+1,SI,NO,,,5
+2,SI,NO,Risas,,5
+3,SI,Nervios,,,7
+4,SI,,,,3
+5,SI,Indecisa,,,5
+6,SI,,,,8
+7,Si,,,,3
+8,Si,,,,8
+9,SI,,,,10
+10,SI,,,,9
+11,No,,AYUDA AL 11,No sabia su correo,sin
+12,No,,,problemas al inicio de sesion,sin
