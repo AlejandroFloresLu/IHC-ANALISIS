@@ -7,6 +7,7 @@ import { ComponentEvaluationBars } from './charts/ComponentEvaluationBars';
 import { QualitativeFeedbackTable } from './QualitativeFeedbackTable';
 import { KpiCard } from './KpiCard';
 import { TaskAnalytics } from './TaskAnalytics';
+import { AdditionalInterviews } from './AdditionalInterviews';
 
 export const Dashboard = ({ data }) => {
   if (!data) return null;
@@ -65,6 +66,10 @@ export const Dashboard = ({ data }) => {
           <h2 className="text-2xl font-bold text-stone-800 border-b border-stone-200 pb-2">Datos Demográficos y Contexto (Pre-test)</h2>
           <DemographicsPieCharts data={data.demographics} />
         </section>
+
+        {/* --- SECCIÓN 5: ENTREVISTAS ADICIONALES --- */}
+        <AdditionalInterviews />
+        
         
       </div>
     </div>
