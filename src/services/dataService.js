@@ -59,7 +59,7 @@ function processMetrics(preTest, postTest, tasksData) {
   // 1. Demographics and Channels (Pre-test)
   const ageDistribution = countOccurrences(preTest, "¿En qué rango de edad se encuentra? ");
   const deviceDistribution = countOccurrences(preTest, "¿Desde qué dispositivo realiza la mayoría de sus compras en línea?  ");
-  const abandonmentReasons = countOccurrences(preTest, "¿Cuál es la principal razón por la que usted decide ABANDONAR una compra en una página web?  ");
+  const abandonmentReasons = countOccurrences(preTest, " ¿Cuál es la principal razón por la que usted decide ABANDONAR una compra en una página web?  ");
 
   // 2. Usability Index (Post-test)
   let easyNavTotal = 0, uiConsistencyTotal = 0, infoClarityTotal = 0;

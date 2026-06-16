@@ -31,7 +31,9 @@ export const SystemAttributesRadar = ({ data }) => {
         angleLines: { color: '#e7e5e4' },
         grid: { color: '#e7e5e4' },
         pointLabels: { color: '#1c1917', font: { size: 12, family: 'Inter, sans-serif' } },
-        ticks: { color: '#57534e', backdropColor: 'transparent', beginAtZero: true, max: 5 }
+        min: 0,
+        max: 5,
+        ticks: { color: '#57534e', backdropColor: 'transparent' }
       }
     },
     plugins: {

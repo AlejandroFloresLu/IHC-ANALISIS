@@ -26,16 +26,9 @@ export const Dashboard = ({ data }) => {
         {/* --- SECCIÓN 1: DIAGNÓSTICO GENERAL --- */}
         <section className="space-y-6">
           <h2 className="text-2xl font-bold text-stone-800 border-b border-stone-200 pb-2">Diagnóstico General</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="md:col-span-2">
+          <div className="grid grid-cols-1 gap-6">
+            <div className="w-full">
               <UsabilityBarChart data={data.usability} />
-            </div>
-            <div className="md:col-span-1">
-              <KpiCard 
-                title="Tasa de Frustración" 
-                value={data.frustrationRate} 
-                subtitle="% de usuarios con deseos de abandonar" 
-              />
             </div>
           </div>
           <div className="w-full">

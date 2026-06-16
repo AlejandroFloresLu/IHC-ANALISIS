@@ -13,7 +13,6 @@ export const QualitativeFeedbackTable = ({ data }) => {
             <tr className="bg-stone-50 border-b border-stone-200 text-stone-600">
               <th className="p-4 font-semibold w-12 text-center">ID</th>
               <th className="p-4 font-semibold"><div className="flex items-center gap-2"><AlertCircle size={18} className="text-rose-500" /> Dificultades reportadas</div></th>
-              <th className="p-4 font-semibold"><div className="flex items-center gap-2"><MessageSquare size={18} className="text-amber-500" /> Tareas con Frustración</div></th>
               <th className="p-4 font-semibold"><div className="flex items-center gap-2"><Lightbulb size={18} className="text-emerald-500" /> Sugerencias de Diseño</div></th>
             </tr>
           </thead>
@@ -22,7 +21,6 @@ export const QualitativeFeedbackTable = ({ data }) => {
               <tr key={item.id} className="hover:bg-stone-50/50 transition-colors">
                 <td className="p-4 text-center text-stone-400 font-medium">#{item.id}</td>
                 <td className="p-4 text-stone-700">{item.difficulty || <span className="text-stone-300 italic">Sin comentarios</span>}</td>
-                <td className="p-4 text-stone-700">{item.frustration || <span className="text-stone-300 italic">Sin comentarios</span>}</td>
                 <td className="p-4 text-stone-700">{item.suggestion || <span className="text-stone-300 italic">Sin comentarios</span>}</td>
               </tr>
             ))}

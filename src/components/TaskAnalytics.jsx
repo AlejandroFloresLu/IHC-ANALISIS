@@ -20,6 +20,8 @@ ChartJS.register(
 );
 
 export const TaskAnalytics = ({ tasks }) => {
+  const [activeTab, setActiveTab] = React.useState(0);
+
   if (!tasks || tasks.length === 0) return null;
 
   const chartData = {
@@ -62,50 +64,69 @@ export const TaskAnalytics = ({ tasks }) => {
         </div>
       </div>
 
-      {/* Retroalimentación Cualitativa */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {tasks.map(task => (
-          <div key={`task-${task.taskNumber}`} className="bg-white p-6 rounded-2xl shadow-sm border border-stone-100 flex flex-col">
-            <h3 className="text-lg font-bold text-stone-800 border-b pb-2 mb-4">
-              Tarea {task.taskNumber} - Observaciones
-            </h3>
-            
-            {task.qualitativeNotes.length === 0 ? (
-              <p className="text-stone-500 italic flex-1 flex items-center justify-center">
-                Sin observaciones relevantes para esta tarea.
-              </p>
-            ) : (
-              <div className="space-y-4 flex-1 overflow-y-auto max-h-80 pr-2">
-                {task.qualitativeNotes.map((note, idx) => (
-                  <div key={idx} className="bg-stone-50 p-4 rounded-xl border border-stone-100 text-sm">
-                    <p className="font-semibold text-stone-700 mb-2">Usuario: {note.user}</p>
-                    
-                    {note.errors !== "-" && (
-                      <p className="text-stone-600 mb-1">
-                        <span className="font-medium text-rose-500">Errores: </span> 
-                        {note.errors}
-                      </p>
-                    )}
-                    
-                    {note.frustration !== "-" && (
-                      <p className="text-stone-600 mb-1">
-                        <span className="font-medium text-orange-500">Gestos: </span> 
-                        {note.frustration}
-                      </p>
-                    )}
-                    
-                    {note.notes !== "-" && (
-                      <p className="text-stone-600">
-                        <span className="font-medium text-blue-500">Notas: </span> 
-                        {note.notes}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+      {/* Retroalimentación Cualitativa (TABS) */}
+      <div className="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+        <div className="flex overflow-x-auto border-b border-stone-200">
+          {tasks.map((task, idx) => (
+            <button
+              key={task.taskNumber}
+              onClick={() => setActiveTab(idx)}
+              className={`px-6 py-4 font-semibold text-sm transition-colors whitespace-nowrap ${
+                activeTab === idx 
+                  ? 'border-b-2 border-violet-500 text-violet-600 bg-violet-50/30' 
+                  : 'text-stone-500 hover:bg-stone-50 hover:text-stone-700'
+              }`}
+            >
+              Tarea {task.taskNumber}
+            </button>
+          ))}
+        </div>
+        
+        <div className="p-6">
+          <h3 className="text-lg font-bold text-stone-800 mb-4">
+            Observaciones Detalladas
+          </h3>
+          
+          {tasks[activeTab].qualitativeNotes.length === 0 ? (
+            <div className="p-8 text-center text-stone-500 bg-stone-50 rounded-xl italic">
+              Sin observaciones relevantes para esta tarea.
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {tasks[activeTab].qualitativeNotes.map((note, idx) => (
+                <div key={idx} className="bg-stone-50 p-4 rounded-xl border border-stone-100 text-sm hover:shadow-sm transition-shadow">
+                  <p className="font-semibold text-stone-700 mb-3 flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center text-xs">
+                      #{note.user}
+                    </span>
+                    Usuario
+                  </p>
+                  
+                  {note.errors !== "-" && (
+                    <p className="text-stone-600 mb-2">
+                      <span className="font-medium text-rose-500 block mb-1">Errores detectados: </span> 
+                      {note.errors}
+                    </p>
+                  )}
+                  
+                  {note.frustration !== "-" && (
+                    <p className="text-stone-600 mb-2">
+                      <span className="font-medium text-orange-500 block mb-1">Gestos de frustración: </span> 
+                      {note.frustration}
+                    </p>
+                  )}
+                  
+                  {note.notes !== "-" && (
+                    <p className="text-stone-600">
+                      <span className="font-medium text-blue-500 block mb-1">Notas del observador: </span> 
+                      {note.notes}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
