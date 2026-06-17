@@ -102,26 +102,25 @@ export const TaskAnalytics = ({ tasks }) => {
                     Usuario
                   </p>
                   
-                  {note.errors !== "-" && (
-                    <p className="text-stone-600 mb-2">
-                      <span className="font-medium text-rose-500 block mb-1">Errores detectados: </span> 
-                      {note.errors}
-                    </p>
-                  )}
+                  <p className="text-stone-600 mb-2">
+                    <span className="font-medium text-emerald-500 block mb-1">Tiempo empleado: </span> 
+                    {note.time && note.time !== "-" && note.time.toLowerCase() !== "sin" ? note.time + " s" : "No registrado"}
+                  </p>
                   
-                  {note.frustration !== "-" && (
-                    <p className="text-stone-600 mb-2">
-                      <span className="font-medium text-orange-500 block mb-1">Gestos de frustración: </span> 
-                      {note.frustration}
-                    </p>
-                  )}
+                  <p className="text-stone-600 mb-2">
+                    <span className="font-medium text-rose-500 block mb-1">Errores detectados: </span> 
+                    {note.errors && note.errors !== "-" ? note.errors : "Sin errores detectados"}
+                  </p>
                   
-                  {note.notes !== "-" && (
-                    <p className="text-stone-600">
-                      <span className="font-medium text-blue-500 block mb-1">Notas del observador: </span> 
-                      {note.notes}
-                    </p>
-                  )}
+                  <p className="text-stone-600 mb-2">
+                    <span className="font-medium text-orange-500 block mb-1">Gestos de frustración: </span> 
+                    {note.frustration && note.frustration !== "-" ? note.frustration : "Sin gestos"}
+                  </p>
+                  
+                  <p className="text-stone-600">
+                    <span className="font-medium text-blue-500 block mb-1">Notas del observador: </span> 
+                    {note.notes && note.notes !== "-" ? note.notes : "Sin observaciones"}
+                  </p>
                 </div>
               ))}
             </div>

@@ -179,15 +179,15 @@ function processMetrics(preTest, postTest, tasksData) {
       const errors = row["Errores / Clics Compulsivos"]?.trim();
       const frustration = row["Gestos de Frustración"]?.trim();
       const notes = row["Notas del Observador"]?.trim();
+      const time = row["Tiempo"]?.trim();
 
-      if ((errors && errors.length > 1) || (frustration && frustration.length > 1) || (notes && notes.length > 1)) {
-        qualitativeNotes.push({
-          user: idUser,
-          errors: errors || "-",
-          frustration: frustration || "-",
-          notes: notes || "-"
-        });
-      }
+      qualitativeNotes.push({
+        user: idUser,
+        errors: errors || "-",
+        frustration: frustration || "-",
+        notes: notes || "-",
+        time: time || "-"
+      });
     });
 
     return {
