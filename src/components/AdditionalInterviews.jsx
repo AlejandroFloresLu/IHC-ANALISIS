@@ -27,7 +27,7 @@ export const AdditionalInterviews = () => {
               Resumen de Experiencia
             </h4>
             <p className="text-stone-600 text-sm leading-relaxed">
-              Durante la interacción, estos dos usuarios (Puestos 11 y 12) reportaron múltiples fricciones al utilizar el prototipo inicial. Sin embargo, es destacable que su curva de aprendizaje fue positiva: aunque las tareas iniciales les costaron mucho, lograron adaptarse al sistema y completar con éxito las tareas 3 y 4 de forma mucho más fácil (aunque requirieron más tiempo), demostrando que la interfaz es asimilable incluso con menor dominio digital.
+              Durante la interacción, estos dos usuarios (Puestos 11 y 12) reportaron múltiples fricciones al utilizar el prototipo inicial. Sin embargo, es destacable que su curva de aprendizaje fue positiva: aunque las tareas iniciales les costaron mucho, lograron adaptarse al sistema y completar con éxito la tarea 3 de forma mucho más fácil (aunque requirieron más tiempo), demostrando que la interfaz es asimilable incluso con menor dominio digital.
             </p>
           </div>
         </div>
@@ -84,7 +84,7 @@ export const AdditionalInterviews = () => {
                       </div>
                       <span className="text-amber-600 font-medium">Mejora Progresiva</span>
                     </div>
-                    <span className="text-xs text-stone-500">Baja al inicio, Alta en tareas 3 y 4</span>
+                    <span className="text-xs text-stone-500">Baja al inicio, Alta en la tarea 3</span>
                   </div>
                 </td>
                 <td className="p-4">
