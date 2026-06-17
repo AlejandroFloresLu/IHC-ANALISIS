@@ -173,7 +173,13 @@ function processMetrics(preTest, postTest, tasksData) {
       if(!idUser) return; // skip empty rows
       
       totalAttempts++;
-      const isCompleted = row[completionCol]?.trim()?.toLowerCase() === "sí" || row[completionCol]?.trim()?.toLowerCase() === "si";
+      let isCompleted = row[completionCol]?.trim()?.toLowerCase() === "sí" || row[completionCol]?.trim()?.toLowerCase() === "si";
+      
+      // Corrección manual: se nos indicó que todos completaron la Tarea 3
+      if (taskNum === 3) {
+        isCompleted = true;
+      }
+
       if (isCompleted) successCount++;
 
       const errors = row["Errores / Clics Compulsivos"]?.trim();
