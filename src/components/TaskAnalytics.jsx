@@ -104,7 +104,7 @@ export const TaskAnalytics = ({ tasks }) => {
                   
                   <p className="text-stone-600 mb-2">
                     <span className="font-medium text-emerald-500 block mb-1">Tiempo empleado: </span> 
-                    {note.time && note.time !== "-" && note.time.toLowerCase() !== "sin" ? note.time + " s" : "No registrado"}
+                    {note.time && note.time !== "-" && note.time.toLowerCase() !== "sin" ? note.time + " min" : "No registrado"}
                   </p>
                   
                   <p className="text-stone-600 mb-2">
