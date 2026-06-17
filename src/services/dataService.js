@@ -60,6 +60,7 @@ function processMetrics(preTest, postTest, tasksData) {
   const ageDistribution = countOccurrences(preTest, "¿En qué rango de edad se encuentra? ");
   const deviceDistribution = countOccurrences(preTest, "¿Desde qué dispositivo realiza la mayoría de sus compras en línea?  ");
   const abandonmentReasons = countOccurrences(preTest, " ¿Cuál es la principal razón por la que usted decide ABANDONAR una compra en una página web?  ");
+  const purchaseFrequency = countOccurrences(preTest, "¿Con qué frecuencia realiza compras (de cualquier tipo de producto) por internet?  ");
 
   // 2. Usability Index (Post-test)
   let easyNavTotal = 0, uiConsistencyTotal = 0, infoClarityTotal = 0;
@@ -200,7 +201,8 @@ function processMetrics(preTest, postTest, tasksData) {
     demographics: {
       age: ageDistribution,
       devices: deviceDistribution,
-      abandonment: abandonmentReasons
+      abandonment: abandonmentReasons,
+      frequency: purchaseFrequency
     },
     usability: usabilityMetrics,
     frustrationRate: frustrationRate,
