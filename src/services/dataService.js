@@ -182,17 +182,24 @@ function processMetrics(preTest, postTest, tasksData) {
 
       if (isCompleted) successCount++;
 
-      const errors = row["Errores / Clics Compulsivos"]?.trim();
-      const frustration = row["Gestos de Frustración"]?.trim();
-      const notes = row["Notas del Observador"]?.trim();
-      const time = row["Tiempo"]?.trim();
+      let errors = row["Errores / Clics Compulsivos"]?.trim();
+      let frustration = row["Gestos de Frustración"]?.trim();
+      let notes = row["Notas del Observador"]?.trim();
+      let time = row["Tiempo"]?.trim();
+
+      const normalizeEmpty = (val) => {
+        if (!val) return "-";
+        const lower = val.toLowerCase();
+        if (["no", "sin", "sinobervaciones", "sin observaciones", "ninguno", "ninguna"].includes(lower)) return "-";
+        return val;
+      };
 
       qualitativeNotes.push({
         user: idUser,
-        errors: errors || "-",
-        frustration: frustration || "-",
-        notes: notes || "-",
-        time: time || "-"
+        errors: normalizeEmpty(errors),
+        frustration: normalizeEmpty(frustration),
+        notes: normalizeEmpty(notes),
+        time: normalizeEmpty(time)
       });
     });
 
